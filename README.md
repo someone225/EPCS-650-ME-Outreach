@@ -6,7 +6,9 @@
 > git branch -M main <br/>
 > git pull origin main <br/>
 
-or download github for desktop and download through the setup app <br/>
+## or download github for desktop and download through the setup app <br/>
+> download github for desktop here: https://desktop.github.com/download/ <br/>
+> `#0000FF this way is much easier ngl` <br/>
 
 
 please make sure all code is useable before pushing <br/>
