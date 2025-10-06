@@ -1,5 +1,5 @@
-#public repository for EPCS 650 ME Outreach, Fall 2025
-##download git and run the following in command terminal to start commits <br/>
+# public repository for EPCS 650 ME Outreach, Fall 2025 <br/>
+## download git and run the following in command terminal to start commits <br/>
 
 > git clone https://github.com/someone225/EPCS-650-ME-Outreach.git <br/>
 > git remote add origin https://github.com/someone225/EPCS-650-ME-Outreach.git <br/>
