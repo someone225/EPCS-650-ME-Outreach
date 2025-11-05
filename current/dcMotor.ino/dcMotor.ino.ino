@@ -5,13 +5,18 @@
 #define in3 0
 #define in4 0
 
+#include <multiMotor.h>
+
+dcMotor testMotor
 void setup() {
   // put your setup code here, to run once:
-  dcMotor motor
+  testMotor.begin();
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
   //digitalWrite(enA, HIGH);
-  motor.initDual
+
+  testMotor.initDual
+  
 }

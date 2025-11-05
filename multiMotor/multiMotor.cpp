@@ -1,7 +1,18 @@
 #include "Arduino.h"
 #include "multiMotor.h"
 
-void dcMotor::begin()
+
+multiMotor::multiMotor (int ctr1, int ctr2, int ctr3, int ctr4, int id, int pwm)
+{
+    _ctr1 = ctr1
+    _ctr2 = ctr2
+    _ctr3 = ctr3
+    _ctr4 = ctr4
+    _id = id
+    _pwm = pwm
+}
+
+void multiMotor::begin()
 {
     this->in1 = 0;
     this->in2 = 0;
@@ -11,9 +22,16 @@ void dcMotor::begin()
     this->enB = 0;
 
     this->ocLimit = 12.0;
+
+    pinMode(_ctr1, OUTPUT);
+    pinMode(_ctr2, OUTPUT);
+    pinMode(_ctr3, OUTPUT);
+    pinMode(_ctr4, OUTPUT);
+    pinMode(_id, OUTPUT);
+    pinMode(_pwn, OUTPUT);
 }
 
-int dcMotor::initSingle(int ctr1, int ctr2, int id, int pwm)
+int multiMotor::initSingle(int ctr1, int ctr2, int id, int pwm)
 /*
    initializes a single-channel motor
    args:
@@ -56,7 +74,7 @@ int dcMotor::initSingle(int ctr1, int ctr2, int id, int pwm)
         return 0;
 }
 
-int dcMotor::initDual(int ctr1, int ctr2, int ctr3, int ctr4, int pwmA, int pwmB)
+int multiMotor::initDual(int ctr1, int ctr2, int ctr3, int ctr4, int pwmA, int pwmB)
 /*
    initializes a dual-channel
    args:
@@ -88,7 +106,7 @@ int dcMotor::initDual(int ctr1, int ctr2, int ctr3, int ctr4, int pwmA, int pwmB
     return 1;
 }
 
-int dcMotor::driveSingle(char dir, int id, float power)
+int multiMotor::driveSingle(char dir, int id, float power)
 /*
 drives a single-channel motor
 args:
@@ -142,7 +160,7 @@ returns:
     }
 }
 
-int dcMotor::driveDual(char dir, float power)
+int multiMotor::driveDual(char dir, float power)
 /*
    drives a dual-channel motor
    args:
@@ -171,7 +189,7 @@ int dcMotor::driveDual(char dir, float power)
     return 1;
 }
 
-int dcMotor::overclock(float ocWattage)
+int multiMotor::overclock(float ocWattage)
 /*
    overclocks a dual-channel motor
    args:
