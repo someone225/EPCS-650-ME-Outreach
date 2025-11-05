@@ -1,0 +1,7 @@
+dcMotor KEYWORD1
+initSingle KEYWORD2
+initDual KEYWORD3
+driveSingle KEYWORD4
+driveDual KEYWORD5
+overclock KEYWORD6
+begin KEYWORD7
