@@ -1,5 +1,5 @@
-#ifndef dcMotor_h
-#define dcMotor_h
+#ifndef multiMotor_h
+#define multiMotor_h
 
 #include "Arduino.h"
 

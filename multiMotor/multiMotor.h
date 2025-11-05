@@ -1,0 +1,28 @@
+#ifndef multiMotor_h
+#define multiMotor_h
+
+#include "Arduino.h"
+
+class dcMotor
+{
+    public:
+        void begin();
+        int initSingle(int ctr1, int ctr2, int id, int pwm);
+        int initDual(int ctr1, int ctr2, int ctr3, int ctr4, int pwmA, int pwmB);
+        int driveSingle(char dir, int id, float power);
+        int driveDual(char dir, float power);
+        int overclock(float ocWattage);
+
+    
+    private:
+        int in1;
+        int in2;
+        int in3;
+        int in4;
+        int enA;
+        int enB;
+
+        float ocLimit;
+};
+
+#endif

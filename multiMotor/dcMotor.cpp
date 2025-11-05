@@ -1,16 +1,16 @@
 #include "Arduino.h"
-#include "dcMotor.h"
+#include "multiMotor.h"
 
 void dcMotor::begin()
 {
-    dcMotor.in1 = 0;
-    dcMotor.in2 = 0;
-    dcMotor.in3 = 0;
-    dcMotor.in4 = 0;
-    dcMotor.enA = 0;
-    dcMotor.enB = 0;
+    this->in1 = 0;
+    this->in2 = 0;
+    this->in3 = 0;
+    this->in4 = 0;
+    this->enA = 0;
+    this->enB = 0;
 
-    dcMotor.ocLimit = 12.0;
+    this->ocLimit = 12.0;
 }
 
 int dcMotor::initSingle(int ctr1, int ctr2, int id, int pwm)
@@ -30,25 +30,25 @@ int dcMotor::initSingle(int ctr1, int ctr2, int id, int pwm)
     switch id
     {
         case 1:
-        dcMotor.in1 = ctr1;
-        dcMotor.in2 = ctr2;
-        dcMotor.enA = pwm;
+        this->in1 = ctr1;
+        this->in2 = ctr2;
+        this->enA = pwm;
 
-        pinMode(dcMotor.in1, OUTPUT);
-        pinMode(dcMotor.in2, OUTPUT);
-        pinMode(dcMotor.enA, OUTPUT);
+        pinMode(this->in1, OUTPUT);
+        pinMode(this->in2, OUTPUT);
+        pinMode(this->enA, OUTPUT);
         
         return 1;
         break;
         
         case 2:
-        dcMotor.in3 = ctr1;
-        dcMotor.in4 = ctr2;
-        dcMotor.enB = pwm;
+        this->in3 = ctr1;
+        this->in4 = ctr2;
+        this->enB = pwm;
 
-        pinMode(dcMotor.in3, OUTPUT);
-        pinMode(dcMotor.in4, OUTPUT);
-        pinMode(dcMotor.enB, OUTPUT);
+        pinMode(this->in3, OUTPUT);
+        pinMode(this->in4, OUTPUT);
+        pinMode(this->enB, OUTPUT);
 
         return 2;
 
@@ -71,19 +71,19 @@ int dcMotor::initDual(int ctr1, int ctr2, int ctr3, int ctr4, int pwmA, int pwmB
 */
 {
 
-    dcMotor.in1 = ctr1
-    dcMotor.in2 = ctr2
-    dcMotor.in3 = ctr3
-    dcMotor.in4 = ctr4
-    dcMotor.enA = pwmA
-    dcMotor.enB = pwmB
+    this->in1 = ctr1
+    this->in2 = ctr2
+    this->in3 = ctr3
+    this->in4 = ctr4
+    this->enA = pwmA
+    this->enB = pwmB
 
-    pinMode(dcMotor.in1, OUTPUT);
-    pinMode(dcMotor.in2, OUTPUT);
-    pinMode(dcMotor.in3, OUTPUT);
-    pinMode(dcMotor.in4, OUTPUT);
-    pinMode(dcMotor.enA, OUTPUT);
-    pinMode(dcMotor.enB, OUTPUT);
+    pinMode(this->in1, OUTPUT);
+    pinMode(this->in2, OUTPUT);
+    pinMode(this->in3, OUTPUT);
+    pinMode(this->in4, OUTPUT);
+    pinMode(this->enA, OUTPUT);
+    pinMode(this->enB, OUTPUT);
 
     return 1;
 }
@@ -106,32 +106,32 @@ returns:
         case 1:
             if(dir == "FORWARDS")
             {
-            digitalWrite(dcMotor.in1, HIGH);
-            digitalWrite(dcMotor.in2, LOW);
+            digitalWrite(this->in1, HIGH);
+            digitalWrite(this->in2, LOW);
             }
             else if(dir == "REVERSE")
             {
-            digitalWrite(dcMotor.in1, LOW);
-            digitalWrite(dcMotor.in2, HIGH);
+            digitalWrite(this->in1, LOW);
+            digitalWrite(this->in2, HIGH);
             }
 
-            analogWrite(dcMotor.enA, round(power * 2.55) )
+            analogWrite(this->enA, round(power * 2.55) )
             return 1;
             break;
 
         case 2:
             if(dir == "FORWARDS")
             {
-            digitalWrite(dcMotor.in3, HIGH);
-            digitalWrite(dcMotor.in4, LOW);
+            digitalWrite(this->in3, HIGH);
+            digitalWrite(this->in4, LOW);
             }
             else if(dir == "REVERSE")
             {
-            digitalWrite(dcMotor.in3, LOW);
-            digitalWrite(dcMotor.in4, HIGH);
+            digitalWrite(this->in3, LOW);
+            digitalWrite(this->in4, HIGH);
             }
 
-            analogWrite(dcMotor.enB, round(power * 2.55) )
+            analogWrite(this->enB, round(power * 2.55) )
             return 2;
             break;
 
@@ -154,20 +154,20 @@ int dcMotor::driveDual(char dir, float power)
 {
     if(dir == "FORWARDS")
     {
-    digitalWrite(dcMotor.in1, HIGH);
-    digitalWrite(dcMotor.in2, LOW);
-    digitalWrite(dcMotor.in3, HIGH);
-    digitalWrite(dcMotor.in4, LOW);
+    digitalWrite(this->in1, HIGH);
+    digitalWrite(this->in2, LOW);
+    digitalWrite(this->in3, HIGH);
+    digitalWrite(this->in4, LOW);
     }
     else if(dir == "REVERSE")
     {
-    digitalWrite(dcMotor.in1, LOW);
-    digitalWrite(dcMotor.in2, HIGH);
-    digitalWrite(dcMotor.in3, LOW);
-    digitalWrite(dcMotor.in4, HIGH);
+    digitalWrite(this->in1, LOW);
+    digitalWrite(this->in2, HIGH);
+    digitalWrite(this->in3, LOW);
+    digitalWrite(this->in4, HIGH);
     }
 
-    analogWrite(dcMotor.enA, round(power * 2.55) )
+    analogWrite(this->enA, round(power * 2.55) )
     return 1;
 }
 
@@ -181,9 +181,9 @@ int dcMotor::overclock(float ocWattage)
     - 0, if overclock wattage has exceeded safe limits or failed
 */
 {
-    if(ocWattage <= dcMotor.ocLimit)
+    if(ocWattage <= this->ocLimit)
     {
-    analogWrite(dcMotor.enB, round(ocWattage * (255/14.4) ) )
+    analogWrite(this->enB, round(ocWattage * (255/14.4) ) )
     return 1;
     }
     else
