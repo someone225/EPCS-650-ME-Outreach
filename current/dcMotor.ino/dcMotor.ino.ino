@@ -7,7 +7,7 @@
 
 #include <multiMotor.h>
 
-dcMotor testMotor
+multiMotor testMotor
 void setup() {
   // put your setup code here, to run once:
   testMotor.begin();
