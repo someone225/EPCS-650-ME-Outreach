@@ -8,7 +8,7 @@
 #define in3 0
 #define in4 0
 
-multiMotor testMotor();
+multiMotor testMotor;
 void setup() {
   // put your setup code here, to run once:
 }
@@ -16,6 +16,6 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   //digitalWrite(enA, HIGH);
-  initSingle(0, 0, 1, 0);
+  testMotor.initSingle(0, 0, 1, 0);
   
 }
