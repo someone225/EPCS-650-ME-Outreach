@@ -2,34 +2,19 @@
 #include "multiMotor.h"
 
 
-multiMotor::multiMotor (int ctr1, int ctr2, int ctr3, int ctr4, int id, int pwm)
+multiMotor::multiMotor()
 {
-    _ctr1 = ctr1
-    _ctr2 = ctr2
-    _ctr3 = ctr3
-    _ctr4 = ctr4
-    _id = id
-    _pwm = pwm
+    in1 = 0;
+    in2 = 0;
+    in3 = 0;
+    in4 = 0;
+    id = 0;
+    enA = 0;
+    enB = 0;
+
+    ocLimit = 0
 }
 
-void multiMotor::begin()
-{
-    this->in1 = 0;
-    this->in2 = 0;
-    this->in3 = 0;
-    this->in4 = 0;
-    this->enA = 0;
-    this->enB = 0;
-
-    this->ocLimit = 12.0;
-
-    pinMode(_ctr1, OUTPUT);
-    pinMode(_ctr2, OUTPUT);
-    pinMode(_ctr3, OUTPUT);
-    pinMode(_ctr4, OUTPUT);
-    pinMode(_id, OUTPUT);
-    pinMode(_pwn, OUTPUT);
-}
 
 int multiMotor::initSingle(int ctr1, int ctr2, int id, int pwm)
 /*
@@ -74,7 +59,7 @@ int multiMotor::initSingle(int ctr1, int ctr2, int id, int pwm)
         return 0;
 }
 
-int multiMotor::initDual(int ctr1, int ctr2, int ctr3, int ctr4, int pwmA, int pwmB)
+int multiMotor::initDual(int ctr1, int ctr2, int ctr3, int ctr4, int pwmA, int pwmB, float ocMaxWattage)
 /*
    initializes a dual-channel
    args:
@@ -89,12 +74,14 @@ int multiMotor::initDual(int ctr1, int ctr2, int ctr3, int ctr4, int pwmA, int p
 */
 {
 
-    this->in1 = ctr1
-    this->in2 = ctr2
-    this->in3 = ctr3
-    this->in4 = ctr4
-    this->enA = pwmA
-    this->enB = pwmB
+    this->in1 = ctr1;
+    this->in2 = ctr2;
+    this->in3 = ctr3;
+    this->in4 = ctr4;
+    this->enA = pwmA;
+    this->enB = pwmB;
+
+    this->ocLimit = ocMaxWattage;
 
     pinMode(this->in1, OUTPUT);
     pinMode(this->in2, OUTPUT);

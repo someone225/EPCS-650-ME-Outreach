@@ -20,6 +20,7 @@ class multiMotor
         int in2;
         int in3;
         int in4;
+        int id;
         int enA;
         int enB;
 
