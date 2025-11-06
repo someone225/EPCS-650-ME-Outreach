@@ -6,8 +6,7 @@
 class multiMotor
 {
     public:
-        multiMotor (int ctr1, int ctr2, int ctr3, int ctr4, int id, int pwm);
-        void begin();
+        multiMotor ();
         int initSingle(int ctr1, int ctr2, int id, int pwm);
         int initDual(int ctr1, int ctr2, int ctr3, int ctr4, int pwmA, int pwmB);
         int driveSingle(char dir, int id, float power);
