@@ -1,5 +1,6 @@
 #include <Servo.h>
 #include <multiMotor.h>
+#include <math.h>
 Servo myservo; //create servo object to control a servo
 
 const int pos = 0; //variable to store the servo position
@@ -16,8 +17,6 @@ const int ENB = 10;
 const int MaxOverclockWattage = 12;
 
 const int deg = 90;
-const int forwardDriveMultiplier = 255;
-const int reverseDriveMultiplier = 190;
 
 
 multiMotor driveMotor(12); 
@@ -47,65 +46,90 @@ void loop()
   int ch1PpD; //ch1 Pulse per degree
   int ch3PpS; //ch3 Pulse per speed
 
-  driveMotor.driveDual(100, 12);
-/*
+
+
+
+  //driveMotor.driveDual(0, 12);
+
 
  
 
 
 
   //Forward and Reverse Movement
-  ch3Pulse = pulseIn(ch3Rpin, HIGH); //records new pulse width for channel 3
-  //Serial.print("Variable_1:");
+  ch3Pulse = pulseIn(ch3Rpin, HIGH);
+  //driveMotor.driveDual(PwrPercent, 12);
+  PwrPercent = convertPower(ch3Pulse);
+
+  
 
 
+  Serial.print("Variable_1:");
+  Serial.print(PwrPercent);
+  Serial.print(",");
+  Serial.print("Variable_2:");
+  Serial.println(0);
 
-  if (ch3Pulse > 1300 && ch3Pulse < 1500)
-  { //checks if left joystick is inbetween third and fourth dash and if so sets speed to zero
-    driveMotor.driveDual(0, 0);
-
-
-  }
-
-  else if (ch3Pulse > 1500)
-  { //checks if left joystick is moving forward
-
-
-    //1000 - 2000 -> -255 - 255
-    // pwr - 1500 / 2
-    eightBitPwr =( ch3Pulse - 1500 / 2);
-    PwrPercent = (eightBitPwr/255) * 100;
-    driveMotor.driveDual(100, 10);
-    
-
-  } 
-  else if (ch3Pulse < 1300)
-  { //checks if left joystick is moving in reverse
-
-    //1000 - 2000 -> -255 - 255
-    // pwr - 1500 / 2
-    eightBitPwr =( ch3Pulse - 1500 / 2);
-    PwrPercent = (eightBitPwr/255) * 100;
-    driveMotor.driveDual(-100, 10);
-  }
+  driveMotor.driveDual(PwrPercent, 12);
+  
 
 
   //Turning Movement
   ch1Pulse = pulseIn(ch1Rpin, HIGH); //records new pulse width for channel 1
-  if(ch1Pulse >= 1370 && ch1Pulse <= 1385)
+  if(ch1Pulse >= 1300 && ch1Pulse <= 1400)
   { //checks if joystick is still
     myservo.write(deg); //sets wheels straight
   } 
-  else if(ch1Pulse < 1370)
+  else if(ch1Pulse < 1300)
   { //checks if right joystick is moving left  
     ch1PpD = 376/deg;
     myservo.write(((ch1Pulse-1370)/ch1PpD)+deg); //tells the servo how many degrees to turn to the left
   } 
-  else if(ch1Pulse > 1385)
+  else if(ch1Pulse > 1400)
   { //checks if right joystick is moving right
     ch1PpD = 502/deg;
     myservo.write(((ch1Pulse-1385)/ch1PpD)+deg); //tells the servo how many degrees to turn to the right
   }
   
-  */
+  
+}
+
+
+float convertPower(float pulse)
+{
+  //1000 -> -100
+  // 1300 - 1600 -> 0
+  //1950 -> 100
+
+  int output = 0;
+  
+  if(pulse > 1600)
+  {
+    output = (pulse - 1450)  / 5;
+  }
+  else if(pulse < 1300)
+  {
+    //0 , -300 -> 0, -100
+    output = ( pulse - 1300 ) / 3;
+  }
+  else
+  {
+    output = 0;
+  }
+
+
+  if(output > 100)
+  {
+    output = 100;
+  }
+  if(output < -100)
+  {
+    output = -100;
+  }
+
+  
+
+
+  return output;
+
 }
