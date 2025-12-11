@@ -12,7 +12,6 @@
 
 
 please make sure all code is useable before pushing <br/>
-do not commit irrelevant files <br/>
 
 
 
