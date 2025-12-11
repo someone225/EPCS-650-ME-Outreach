@@ -15,5 +15,5 @@ please make sure all code is useable before pushing <br/>
 do not commit irrelevant files <br/>
 
 test image upload
-![alt text]([http://url/to/img.png](https://www.publicdomainpictures.net/en/view-image.php?image=115236&picture=white-texture-background))
+![alt text]([https://www.publicdomainpictures.net/en/view-image.php?image=115236&picture=white-texture-background])
 
