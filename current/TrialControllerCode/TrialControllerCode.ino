@@ -6,7 +6,9 @@ Servo myservo; //create servo object to control a servo
 const int pos = 0; //variable to store the servo position
 
 const int ch1Rpin = 6; //this connects to channel 1 on rc receiver
+const int ch2Rpin = 3; //this connects to channel 2 on rc receiver
 const int ch3Rpin = 5; //this connects to channel 3 on rc receiver
+const int ch6Rpin = 2; //this connects to channel 6 on rc reveiver
 
 const int ENA = 11;
 const int IN1 = 13;
@@ -31,7 +33,6 @@ void setup()
   Serial.begin(9600);
   myservo.attach(4);
 
-  
 
 
 }
@@ -42,9 +43,11 @@ void loop()
   float eightBitPwr;
   float PwrPercent;
   unsigned long ch1Pulse; //this is the length of the pulse that controller sends from channel 1
+  unsigned long ch2Pulse; //this is the length of the pulse that controller sends from channel 2
   unsigned long ch3Pulse; //this is the lenth of the pulse that controller sends from channel 3
   int ch1PpD; //ch1 Pulse per degree
   int ch3PpS; //ch3 Pulse per speed
+  int ch6Pulse; //status of trigger button
 
 
 
@@ -58,8 +61,12 @@ void loop()
 
   //Forward and Reverse Movement
   ch3Pulse = pulseIn(ch3Rpin, HIGH);
+  ch6Pulse = pulseIn(ch6Rpin, HIGH);
+  ch1Pulse = pulseIn(ch1Rpin, HIGH);
+  ch2Pulse = pulseIn(ch2Rpin, HIGH);
   //driveMotor.driveDual(PwrPercent, 12);
-  PwrPercent = convertPower(ch3Pulse);
+  PwrPercent = convertPower(ch2Pulse); //drive control remapped to right joystick as left joystick doesnt have stabilization 
+  //go read the radiolink t8s user manual for channel configurations
 
   
 
@@ -70,8 +77,27 @@ void loop()
   Serial.print("Variable_2:");
   Serial.println(0);
 
-  driveMotor.driveDual(PwrPercent, 12);
+
+
+  //driveMotor.driveDual(PwrPercent, 12);
+  driveMotor.driveDual(60, 12);
+
   
+  
+
+  while (ch6Pulse > 1500) //right trigger is pressed down
+  {
+    //prototype ecs system (not tested yet)
+      driveMotor.driveDual(100, 12);
+      delay(50);
+      driveMotor.driveDual(-100, 12);
+      delau(50);
+    
+
+  }
+
+
+
 
 
   //Turning Movement
@@ -95,6 +121,7 @@ void loop()
 }
 
 
+
 float convertPower(float pulse)
 {
   //1000 -> -100
@@ -103,14 +130,14 @@ float convertPower(float pulse)
 
   int output = 0;
   
-  if(pulse > 1600)
+  if(pulse < 1300)
   {
-    output = (pulse - 1450)  / 5;
+    output = 1000 / pulse  * 66;
   }
-  else if(pulse < 1300)
+  else if(pulse > 1500)
   {
-    //0 , -300 -> 0, -100
-    output = ( pulse - 1300 ) / 3;
+    //1450 , 1900 -> 0, -100
+    output = -1 * ( ( pulse - 1450 ) / 4.5);
   }
   else
   {
