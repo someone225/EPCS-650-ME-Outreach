@@ -87,7 +87,7 @@ void loop()
 
   while (ch6Pulse > 1500) //right trigger is pressed down
   {
-    //prototype ecs system (not tested yet)
+    //prototype electronic control starter (not tested)
       driveMotor.driveDual(100, 12);
       delay(50);
       driveMotor.driveDual(-100, 12);
